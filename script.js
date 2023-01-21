@@ -12,6 +12,8 @@ async function searchSongs(term) {
   const data = await res.json();
 
   showData(data);
+
+  console.log(data);
 }
 
 //Show data fetched in DOM
@@ -76,6 +78,17 @@ async function getMoreSongs(url) {
   showData(data);
 }
 
+//Get lyrics for song
+
+async function getLyrics(artist, songTitle) {
+  const res = await fetch(`${apiURL}/v1/${artist}/${songTitle}`);
+  const data = await res.json();
+  console.log(artist);
+  console.log(songTitle);
+
+  console.log(data);
+}
+
 // Event listeners
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -86,5 +99,18 @@ form.addEventListener('submit', (e) => {
     alert('type someting....');
   } else {
     searchSongs(searchTerm);
+  }
+});
+
+//get lyrics on click
+
+result.addEventListener('click', (e) => {
+  const clickedEl = e.target;
+
+  if (clickedEl.tagName === 'BUTTON') {
+    const artist = clickedEl.getAttribute('data-artist');
+    const songTitle = clickedEl.getAttribute('data-songtitle');
+
+    getLyrics(artist, songTitle);
   }
 });
